@@ -1,108 +1,76 @@
 body {
   margin: 0;
-  background: #fdeeff;
+  background: #faf6ff;
+  height: 100vh;
   overflow: hidden;
-  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-family: 'Poppins', sans-serif;
   user-select: none;
 }
 
-/* Tap Overlay */
-#tapOverlay {
-  position: fixed;
-  inset: 0;
-  backdrop-filter: blur(6px);
-  background: rgba(255, 200, 230, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  color: #ff6fa8;
+#tapScreen {
+  position: absolute;
+  top: 40%;
+  font-size: 28px;
+  color: #b277c6;
+  background: rgba(255,255,255,0.7);
+  padding: 20px 32px;
+  border-radius: 20px;
   cursor: pointer;
-  z-index: 10;
+  transition: 0.6s;
 }
 
-/* Garden container */
 #garden {
-  position: absolute;
-  bottom: 0;
   width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-/* Flower base */
-.flower {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   position: absolute;
   bottom: 0;
-  animation: grow 3s ease-out forwards;
-  transform-origin: bottom center;
+  opacity: 0;
+  transition: opacity 1.5s ease;
 }
 
-/* Stem */
+.flower {
+  width: 50px;
+  margin: 0 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .stem {
   width: 4px;
-  background: #7bc47f;
-  height: 0;
-  margin: 0 auto;
-  animation: growStem 3s ease-out forwards;
+  height: 0px;
+  background: #6ec17d;
+  animation: stemGrow 3s ease forwards;
 }
 
-/* Petals */
-.petals {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  margin: -20px auto 0;
+.petal {
+  width: 14px;
+  height: 14px;
+  background: #e4c2ff;
+  border-radius: 50%;
+  margin-top: -9px;
   opacity: 0;
-  animation: bloom 2s ease-out 2.2s forwards;
+  animation: bloom 2s ease forwards 2s;
 }
 
-.petals div {
+@keyframes stemGrow { to { height: 210px; } }
+@keyframes bloom { to { opacity: 1; transform: scale(1.4); } }
+
+#message {
   position: absolute;
-  width: 30px;
-  height: 30px;
-  background: radial-gradient(circle, #ffb7e0, #e5a4f5);
-  border-radius: 50% 60% 50% 60%;
-}
-
-/* petal positions */
-.petals div:nth-child(1) { top: -15px; left: 5px; }
-.petals div:nth-child(2) { top: 5px; left: -15px; }
-.petals div:nth-child(3) { top: 5px; right: -15px; }
-.petals div:nth-child(4) { bottom: -15px; left: 5px; }
-
-/* Message Card */
-#messageCard {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.6);
-  background: #fff;
-  padding: 20px 30px;
-  border-radius: 20px;
+  top: 28%;
   text-align: center;
-  font-size: 1.4rem;
-  color: #d24fa1;
+  font-size: 22px;
+  background: rgba(255,255,255,0.85);
+  padding: 22px 35px;
+  border-radius: 18px;
+  color: #734c90;
   opacity: 0;
-  transition: 1s;
-  box-shadow: 0 0 30px rgba(255, 160, 210, 0.4);
-  z-index: 5;
-}
-
-/* Animations */
-@keyframes growStem { to { height: 120px; } }
-@keyframes bloom { to { opacity: 1; } }
-@keyframes grow { to { transform: scale(1); } }
-
-/* Confetti Hearts */
-.heart {
-  position: fixed;
-  color: #ff91c9;
-  font-size: 1.4rem;
-  animation: floatUp 3s ease forwards;
-}
-
-@keyframes floatUp {
-  0% { transform: translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateY(-150px) scale(0.7); opacity: 0; }
+  transform: translateY(30px);
+  transition: 2s;
 }

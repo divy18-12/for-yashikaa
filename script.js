@@ -1,46 +1,35 @@
-const tapOverlay = document.getElementById("tapOverlay");
-const messageCard = document.getElementById("messageCard");
 const garden = document.getElementById("garden");
-const bgm = document.getElementById("bgm");
+const message = document.getElementById("message");
+const tap = document.getElementById("tapScreen");
+const music = document.getElementById("bgMusic");
 
-tapOverlay.onclick = () => {
-  tapOverlay.style.opacity = "0";
-  setTimeout(() => tapOverlay.remove(), 600);
-  bgm.play();
-  createFlowers();
-  setTimeout(showMessage, 4000);
-};
+// Create flowers
+for(let i = 0; i < 12; i++){
+  const flower = document.createElement("div");
+  flower.classList.add("flower");
 
-function createFlowers() {
-  for (let i = 0; i < 15; i++) {
-    let f = document.createElement("div");
-    f.className = "flower";
-    f.style.left = Math.random() * 100 + "vw";
+  const stem = document.createElement("div");
+  stem.classList.add("stem");
+  flower.appendChild(stem);
 
-    f.innerHTML = `
-      <div class="stem"></div>
-      <div class="petals">
-        <div></div><div></div><div></div><div></div>
-      </div>
-    `;
-    garden.appendChild(f);
+  for(let p = 0; p < 4; p++){
+    const petal = document.createElement("div");
+    petal.classList.add("petal");
+    flower.appendChild(petal);
   }
+
+  garden.appendChild(flower);
 }
 
-function showMessage() {
-  messageCard.style.opacity = "1";
-  messageCard.style.transform = "translate(-50%, -50%) scale(1)";
-  throwConfetti();
-}
+tap.addEventListener("click", () => {
+  tap.style.opacity = "0";
+  setTimeout(()=> tap.style.display="none", 600);
 
-function throwConfetti() {
-  for (let i = 0; i < 30; i++) {
-    let h = document.createElement("div");
-    h.className = "heart";
-    h.textContent = "💗";
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.top = "70vh";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 3000);
-  }
-}
+  garden.style.opacity = "1";
+  music.play();
+
+  setTimeout(() => {
+    message.style.opacity = "1";
+    message.style.transform = "translateY(0)";
+  }, 3500);
+});
