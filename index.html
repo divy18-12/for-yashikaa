@@ -1,43 +1,23 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>For Yashika — A Little Surprise</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For You 🌸</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="wrap" aria-live="polite">
-    <div class="overlay" id="overlay" role="button" tabindex="0">
-      <div class="overlay-content">
-        <h2>Tap to continue</h2>
-        <p class="hint">Tap anywhere to make the flowers grow ✨</p>
-      </div>
-    </div>
 
-    <main class="container" id="container" tabindex="0">
-      <h1 class="for-name">For Yashika</h1>
-      <div id="garden" aria-hidden="false">
-        <!-- flower placeholders -->
-        <div class="flower" style="--i:0;"></div>
-        <div class="flower" style="--i:1;"></div>
-        <div class="flower" style="--i:2;"></div>
-        <div class="flower" style="--i:3;"></div>
-        <div class="flower" style="--i:4;"></div>
-        <div class="flower" style="--i:5;"></div>
-        <div class="flower" style="--i:6;"></div>
-      </div>
+<div id="tapOverlay">Tap to continue 💗</div>
 
-      <div id="message" class="hidden" role="status" aria-atomic="true">
-        <p class="line1">Hope this makes you smile</p>
-        <p class="line2">Just wanted to make your day</p>
-      </div>
-      <div id="hearts" aria-hidden="true"></div>
-    </main>
+<div id="garden"></div>
 
-    <audio id="song" src="song.mp3" preload="auto"></audio>
-  </div>
+<div id="messageCard">
+  <p>Hope this makes you smile</p>
+  <p>just wanted to make your day</p>
+</div>
+
+<audio id="bgm" src="song.mp3"></audio>
 
 <script src="script.js"></script>
 </body>
