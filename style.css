@@ -1,6 +1,6 @@
+
 body {
   margin: 0;
-  background: #faf6ff;
   height: 100vh;
   overflow: hidden;
   display: flex;
@@ -8,6 +8,13 @@ body {
   align-items: flex-end;
   font-family: 'Poppins', sans-serif;
   user-select: none;
+  animation: bgFade 14s ease-in-out infinite alternate;
+}
+
+@keyframes bgFade {
+  0%   { background: #faf6ff; }
+  50%  { background: #f8efff; }
+  100% { background: #fdefff; }
 }
 
 #tapScreen {
@@ -35,51 +42,37 @@ body {
 
 .flower {
   width: 50px;
-  margin: 0 10px;
-  position: relative;
+  margin: 0 8px;
   display: flex;
-  flex-direction: column-reverse; /* MAIN FIX → stem grows upward */
+  flex-direction: column;
   align-items: center;
 }
 
 .stem {
-  width: 5px;
-  height: 0;
+  width: 4px;
+  height: 0px;
   background: #6ec17d;
-  border-radius: 2px;
   animation: stemGrow 3s ease forwards;
 }
 
-@keyframes stemGrow {
-  to { height: 300px; } /* Grows taller now */
-}
-
-/* petals placed at top of stem now */
 .petal {
-  position: absolute;
-  bottom: 300px; /* same as stem height */
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   background: #e4c2ff;
   border-radius: 50%;
+  margin-top: -9px;
   opacity: 0;
   animation: bloom 2s ease forwards 2s;
 }
 
-.petal:nth-child(2) { transform: translate(-12px, -8px); }
-.petal:nth-child(3) { transform: translate(12px, -8px); }
-.petal:nth-child(4) { transform: translate(-5px, 6px); }
-.petal:nth-child(5) { transform: translate(5px, 6px); }
-
-@keyframes bloom {
-  to { opacity: 1; transform: scale(1.4); }
-}
+@keyframes stemGrow { to { height: 260px; } }
+@keyframes bloom { to { opacity: 1; transform: scale(1.5); } }
 
 #message {
   position: absolute;
-  top: 18%; /* moved higher for better look */
+  top: 26%;
   text-align: center;
-  font-size: 22px;
+  font-size: 24px;
   background: rgba(255,255,255,0.85);
   padding: 22px 35px;
   border-radius: 18px;
@@ -87,4 +80,28 @@ body {
   opacity: 0;
   transform: translateY(30px);
   transition: 2s;
+  animation: glow 3s infinite alternate ease-in-out;
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 4px #d9b3ff; }
+  100% { text-shadow: 0 0 18px #eaccff; }
+}
+
+.sparkle {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  filter: blur(1px);
+  animation: twinkle 3s linear forwards;
+}
+
+@keyframes twinkle {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.6); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
 }
