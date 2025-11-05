@@ -35,35 +35,49 @@ body {
 
 .flower {
   width: 50px;
-  margin: 0 8px;
+  margin: 0 10px;
+  position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse; /* MAIN FIX → stem grows upward */
   align-items: center;
 }
 
 .stem {
-  width: 4px;
-  height: 0px;
+  width: 5px;
+  height: 0;
   background: #6ec17d;
+  border-radius: 2px;
   animation: stemGrow 3s ease forwards;
 }
 
+@keyframes stemGrow {
+  to { height: 300px; } /* Grows taller now */
+}
+
+/* petals placed at top of stem now */
 .petal {
-  width: 14px;
-  height: 14px;
+  position: absolute;
+  bottom: 300px; /* same as stem height */
+  width: 18px;
+  height: 18px;
   background: #e4c2ff;
   border-radius: 50%;
-  margin-top: -9px;
   opacity: 0;
   animation: bloom 2s ease forwards 2s;
 }
 
-@keyframes stemGrow { to { height: 210px; } }
-@keyframes bloom { to { opacity: 1; transform: scale(1.4); } }
+.petal:nth-child(2) { transform: translate(-12px, -8px); }
+.petal:nth-child(3) { transform: translate(12px, -8px); }
+.petal:nth-child(4) { transform: translate(-5px, 6px); }
+.petal:nth-child(5) { transform: translate(5px, 6px); }
+
+@keyframes bloom {
+  to { opacity: 1; transform: scale(1.4); }
+}
 
 #message {
   position: absolute;
-  top: 28%;
+  top: 18%; /* moved higher for better look */
   text-align: center;
   font-size: 22px;
   background: rgba(255,255,255,0.85);
