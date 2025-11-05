@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="wrap" aria-live="polite">
-    <div class="overlay" id="overlay">
+    <div class="overlay" id="overlay" role="button" tabindex="0">
       <div class="overlay-content">
         <h2>Tap to continue</h2>
         <p class="hint">Tap anywhere to make the flowers grow ✨</p>
@@ -30,8 +30,10 @@
       </div>
 
       <div id="message" class="hidden" role="status" aria-atomic="true">
-        <p>Hope this makes you smile</p>
+        <p class="line1">Hope this makes you smile</p>
+        <p class="line2">Just wanted to make your day</p>
       </div>
+      <div id="hearts" aria-hidden="true"></div>
     </main>
 
     <audio id="song" src="song.mp3" preload="auto"></audio>

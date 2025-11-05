@@ -1,26 +1,59 @@
 
-/* New behavior:
- - Show overlay "Tap to continue" initially.
- - On first user tap/click, remove overlay and start controlled flower growth sequence.
- - After flowers finish growing, show "Hope this makes you smile" message.
- - Play audio from start on user click (handles autoplay policies).
-*/
+/* Floating heart pop message style (option 3) + mixed flower styles */
 document.addEventListener('DOMContentLoaded', function(){
   const overlay = document.getElementById('overlay');
   const container = document.getElementById('container');
   const flowers = Array.from(document.querySelectorAll('.flower'));
   const message = document.getElementById('message');
   const song = document.getElementById('song');
+  const heartsContainer = document.getElementById('hearts');
   let started = false;
 
-  // populate centers
-  flowers.forEach(f => {
+  // create layered petals & centers
+  flowers.forEach((f, idx) => {
+    // main rounded petal layer
+    const petal = document.createElement('div');
+    petal.className = 'petal';
+    petal.style.zIndex = 5;
+    // smaller pointed layer for sakura feel
+    const petal2 = document.createElement('div');
+    petal2.className = 'petal pointed';
+    petal2.style.zIndex = 4;
+    // rotate different petals for variety
+    petal.style.transform = 'translateX(-50%) rotate(' + (idx*8) + 'deg)';
+    petal2.style.transform = 'translateX(-50%) rotate(' + (idx*12) + 'deg) scale(0.92)';
+    f.appendChild(petal);
+    f.appendChild(petal2);
+
     const c = document.createElement('div');
     c.className = 'center';
     f.appendChild(c);
   });
 
-  // click handler
+  function spawnHeart(xPercent){
+    const h = document.createElement('div');
+    h.className = 'heart';
+    // random horizontal spread
+    const left = 10 + Math.random()*80;
+    h.style.left = left + '%';
+    h.style.bottom = '10px';
+    heartsContainer.appendChild(h);
+    // random size
+    const size = 12 + Math.random()*18;
+    h.style.width = size + 'px';
+    h.style.height = size + 'px';
+    h.style.transform = 'rotate(-45deg) scale(0.6)';
+    h.style.opacity = 0;
+    // animate using setTimeout to stagger start
+    setTimeout(()=>{
+      h.style.transition = 'opacity 200ms';
+      h.style.opacity = 1;
+      h.style.animation = 'floatUp 1600ms ease-out forwards';
+    }, 50 + Math.random()*200);
+    // remove after animation
+    setTimeout(()=> h.remove(), 1900);
+  }
+
   function startSequence(){
     if(started) return;
     started = true;
@@ -35,31 +68,27 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // stagger grow each flower to create tall smooth growth
     flowers.forEach((f, idx) => {
-      // longer delay for later flowers to give wave effect
       const delay = idx * 420;
       setTimeout(()=>{
         f.classList.add('grow');
-        // after fully grown, add slight wiggle for lifelike motion
         setTimeout(()=> f.classList.add('slight-wiggle'), 900);
       }, delay);
     });
 
-    // show message after last flower grown (calculate)
-    const totalDelay = (flowers.length - 1) * 420 + 1100 + 300;
+    // show message after last flower grown
+    const totalDelay = (flowers.length - 1) * 420 + 1200 + 350;
     setTimeout(()=>{
       message.classList.remove('hidden');
       message.classList.add('visible');
-      // ensure focus for screen readers
       message.setAttribute('aria-hidden','false');
+      // spawn hearts for 2 seconds
+      const interval = setInterval(()=> spawnHeart(), 160);
+      setTimeout(()=> clearInterval(interval), 2200);
     }, totalDelay);
   }
 
-  // overlay click anywhere
   overlay.addEventListener('click', startSequence);
-  // also allow container click in case overlay removed by focus
+  overlay.addEventListener('keydown', function(e){ if(e.key==='Enter' || e.key===' ') startSequence(); });
   container.addEventListener('click', startSequence);
-  // keyboard accessibility
-  container.addEventListener('keydown', function(e){
-    if((e.key === 'Enter' || e.key === ' ') && !started) startSequence();
-  });
+  container.addEventListener('keydown', function(e){ if((e.key==='Enter'||e.key===' ') && !started) startSequence(); });
 });

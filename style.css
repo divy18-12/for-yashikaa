@@ -29,12 +29,13 @@ body{
 .overlay{
   position:fixed;
   inset:0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0.35));
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.35));
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:40;
   backdrop-filter: blur(4px);
+  cursor:pointer;
 }
 .overlay-content{ text-align:center; padding:28px; border-radius:12px; background:rgba(255,255,255,0.6); box-shadow:0 8px 30px rgba(91,75,91,0.06); }
 .overlay h2{ font-size:28px; color:#8b6b84; margin-bottom:6px }
@@ -46,7 +47,7 @@ body{
   padding:28px;
   border-radius:18px;
   box-shadow: 0 12px 40px rgba(91,75,91,0.09);
-  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.75));
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
   backdrop-filter: blur(6px);
   position:relative; z-index:10;
   outline:none;
@@ -59,14 +60,14 @@ body{
 
 /* Bigger, taller flowers */
 .flower{
-  --size: 160px;
+  --size: 170px;
   width:var(--size);
-  height:calc(var(--size) + 40px);
+  height:calc(var(--size) + 60px);
   position:absolute;
   left:calc(6% + var(--i) * 13%);
-  bottom: -120px;
+  bottom: -140px;
   transform-origin:center bottom;
-  transform: scale(0.02) translateY(30px);
+  transform: scale(0.02) translateY(40px);
   transition: transform 1s cubic-bezier(.2,.9,.2,1), opacity 600ms;
   opacity:0;
 }
@@ -75,59 +76,84 @@ body{
 .flower::before{
   content:"";
   position:absolute;
-  left:48%;
+  left:50%;
   bottom:0;
-  width:6px;
+  width:7px;
   height:100%;
   background: linear-gradient(180deg, var(--stem), #5f8f5f);
   border-radius:6px;
   transform-origin: bottom center;
-  box-shadow: 0 4px 10px rgba(90,120,90,0.08);
+  box-shadow: 0 6px 12px rgba(90,120,90,0.08);
+  transform: translateX(-50%);
 }
 
-/* petals */
+/* layered petals for mixed A+B style */
 .flower::after{
   content:"";
   position:absolute;
   left:50%;
   top:6%;
-  width:120%;
-  height:70%;
+  width:140%;
+  height:78%;
   transform-origin:center;
   border-radius:50%;
   display:block;
   opacity:0.98;
+  box-shadow: 0 10px 40px rgba(91,75,91,0.08);
+  transform: translateX(-50%);
+}
+
+/* multiple petal layers using inner elements */
+.flower .petal{
+  position:absolute;
+  left:50%;
+  top:14%;
+  transform-origin:center;
+  transform: translateX(-50%) rotate(0deg);
+  border-radius:50% 50% 40% 60%;
+  width:86%;
+  height:68%;
+  opacity:0.98;
   box-shadow: 0 8px 30px rgba(91,75,91,0.08);
+}
+
+/* additional pointed-style petals for sakura feel */
+.flower .petal.pointed{
+  border-radius: 40% 60% 40% 60% / 30% 40% 60% 70%;
+  width:74%;
+  height:62%;
+  top:10%;
 }
 
 /* centers */
 .flower .center{
   position:absolute;
-  left:40%;
-  top:34%;
+  left:50%;
+  top:38%;
   width:20%;
   height:20%;
   background:#ffe9d6;
   border-radius:50%;
+  transform: translateX(-50%);
   box-shadow: inset 0 -4px 8px rgba(0,0,0,0.06);
 }
 
 /* Color variations */
-.flower:nth-child(1)::after{ background: radial-gradient(circle at 30% 30%, var(--petal1), #ffd9e6 60%);}
-.flower:nth-child(2)::after{ background: radial-gradient(circle at 30% 30%, var(--petal3), #e6f9ff 60%);}
-.flower:nth-child(3)::after{ background: radial-gradient(circle at 30% 30%, var(--petal2), #fff4cc 60%);}
-.flower:nth-child(4)::after{ background: radial-gradient(circle at 30% 30%, var(--petal1), #ffe1f0 60%);}
-.flower:nth-child(5)::after{ background: radial-gradient(circle at 30% 30%, var(--petal3), #eafffb 60%);}
-.flower:nth-child(6)::after{ background: radial-gradient(circle at 30% 30%, var(--petal2), #fff7d6 60%);}
-.flower:nth-child(7)::after{ background: radial-gradient(circle at 30% 30%, var(--petal1), #fff0e6 60%);}
+.flower:nth-child(1) .petal{ background: linear-gradient(120deg, var(--petal1), #ffd9e6 60%); }
+.flower:nth-child(2) .petal{ background: linear-gradient(120deg, var(--petal3), #e6f9ff 60%); }
+.flower:nth-child(3) .petal{ background: linear-gradient(120deg, var(--petal2), #fff4cc 60%); }
+.flower:nth-child(4) .petal{ background: linear-gradient(120deg, var(--petal1), #ffe1f0 60%); }
+.flower:nth-child(5) .petal{ background: linear-gradient(120deg, var(--petal3), #eafffb 60%); }
+.flower:nth-child(6) .petal{ background: linear-gradient(120deg, var(--petal2), #fff7d6 60%); }
+.flower:nth-child(7) .petal{ background: linear-gradient(120deg, var(--petal1), #fff0e6 60%); }
 
 /* Grow animation classes applied by JS for smoother control */
-.flower.grow{ opacity:1; transform: scale(1) translateY(0); transition-duration: 1100ms; }
+.flower.grow{ opacity:1; transform: scale(1) translateY(0); transition-duration: 1200ms; }
 .flower.slight-wiggle{ animation: wiggle 6s ease-in-out infinite; transform-origin:center bottom; }
 
 @keyframes wiggle{
   0%{ transform: translateY(0) rotate(-1deg) }
-  50%{ transform: translateY(-3px) rotate(1.2deg) }
+  50%{ transform: translateY(-4px) rotate(1.2deg) }
   100%{ transform: translateY(0) rotate(-1deg) }
 }
 
@@ -136,7 +162,7 @@ body{
   margin-top:10px;
   padding:18px;
   border-radius:12px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
+  background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
   display:inline-block;
   opacity:0;
   transform: translateY(8px);
@@ -147,4 +173,37 @@ body{
 }
 #message.visible{ opacity:1; transform: translateY(0); }
 
-.hidden{ display:none; }
+#message .line1{ font-weight:600; margin-bottom:6px; }
+#message .line2{ font-size:14px; color:#7a6a78; margin-top:0; }
+
+/* hearts container */
+#hearts{ position: absolute; left:50%; transform: translateX(-50%); bottom:40px; width:80%; height:240px; pointer-events:none; z-index:30; }
+
+.heart{
+  position:absolute;
+  width:18px;
+  height:18px;
+  transform: rotate(-45deg);
+  background: linear-gradient(180deg, #ff9bb3, #ff6b9a);
+  left:0;
+  top:0;
+  opacity:0;
+  border-radius: 8px 8px 0 0;
+}
+.heart::before, .heart::after{
+  content:"";
+  position:absolute;
+  width:18px;
+  height:18px;
+  background: inherit;
+  border-radius:50%;
+  top:-9px;
+  left:0;
+}
+
+/* heart pop animation */
+@keyframes floatUp{
+  0%{ transform: translateY(0) scale(0.6) rotate(-45deg); opacity:1 }
+  60%{ opacity:1 }
+  100%{ transform: translateY(-160px) scale(1.1) rotate(-45deg); opacity:0 }
+}
