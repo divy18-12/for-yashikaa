@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,15 +8,22 @@
 </head>
 <body>
 
-<div id="tapScreen">Tap Anywhere 💗</div>
+<div id="tapScreen" role="button" tabindex="0">Tap Anywhere 💗</div>
 
-<div id="garden"></div>
+<div id="garden" aria-hidden="false"></div>
 
-<div id="message">
-  Hope this makes you smile<br>just wanted to make your day
+<div id="message" role="status" aria-live="polite">
+  <div class="card">
+    <p class="line1">Hope this makes you smile</p>
+    <p class="line2">just wanted to make your day</p>
+  </div>
 </div>
 
 <audio id="bgMusic" src="song.mp3"></audio>
+
+<div id="petals" aria-hidden="true"></div>
+<div id="butterflies" aria-hidden="true"></div>
+<div id="hearts" aria-hidden="true"></div>
 
 <script src="script.js"></script>
 </body>
